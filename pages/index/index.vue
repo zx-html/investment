@@ -18,7 +18,10 @@
 		<view class="card">
 			<view class="card_top">
 				<view class="card_head">
-					<view class=""><image class="card_img" src="../../static/touxian.png" mode=""></image></view>
+					<view class="headPortrait"  @click="experience()">
+						<image class="card_img" src="../../static/touxian.png"></image>
+						<view class="liveStreaming " ><view class=""></view><view id="MyliveStreaming">直播中</view></view>
+					</view>
 					<view class="card_message">
 						<view class="">
 							童日春
@@ -27,7 +30,7 @@
 						<view class="">执业号：132552455652325</view>
 					</view>
 				</view>
-				<view class="card_botton" @click="experience()">马上体验</view>
+				<view class="card_botton" @click="choiceness()">马上体验</view>
 			</view>
 
 			<view class="card_content">
@@ -41,6 +44,7 @@
 				<text>使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧,</text>
 			</view>
 		</view>
+	
 	</view>
 </template>
 
@@ -75,7 +79,9 @@ export default {
 			}
 		};
 	},
-	onLoad() {},
+	onLoad() {
+		
+	},
 	methods: {
 		change(e) {
 			this.current = e.detail.current;
@@ -85,7 +91,17 @@ export default {
 			uni.navigateTo({
 				url: './experience'
 			});
+			// var MyliveStreaming = document.getElementById("MyliveStreaming")
+			// 	MyliveStreaming.innerHTML="aaaa"
+			// 	console.log(MyliveStreaming)
+		},
+		// 跳转投顾精选
+		choiceness() {
+			uni.navigateTo({
+				url: './choiceness'
+			});
 		}
+		
 	}
 };
 </script>
@@ -109,7 +125,7 @@ export default {
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
-}
+} 
 
 // 标题
 .title {
@@ -133,6 +149,7 @@ export default {
 	padding: 10px;
 	border-radius: 10px;
 	box-shadow: 1px 2px 11px 4px #e9e9e9;
+	margin-bottom: 15px;
 }
 
 .card_top {
@@ -142,9 +159,10 @@ export default {
 
 .card_head {
 	display: flex;
+	position: relative;
 	.card_img {
-		width: 40px;
-		height: 40px;
+		width: 50px;
+		height: 50px;
 		margin-right: 5px;
 	}
 	.card_message {
@@ -158,6 +176,34 @@ export default {
 	.card_message view:nth-child(2) {
 		font-size: 10px;
 		color: #c0c0c0;
+	}
+}
+
+.headPortrait{	
+
+	.liveStreaming{
+		font-size: 10px;
+		position: absolute;
+		top: 40px;
+		left: 0px;
+		border: 1px #ff1417 solid;
+		border-radius: 50px;
+		padding: 0 3px;
+		display: flex;
+		background-color: #FFFFFF;
+		color: #ff1417;
+		
+	}
+	.liveStreaming view:nth-child(1){
+		margin: 6px 3px 0 0;
+		width: 5px;
+		height: 5px;
+		background-color: #ff1417 ;
+		border-radius: 50%;
+		
+	}
+	.liveStreamingBox{
+		
 	}
 }
 .card_botton {
@@ -178,6 +224,7 @@ export default {
 	border-radius: 10px;
 	justify-content: space-between;
 	background-color: #f4f4f4;
+	margin-top: 10px;
 }
 .card_content view {
 	width: 50%;

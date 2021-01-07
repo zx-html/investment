@@ -25,7 +25,7 @@
 					</view>
 					<view class="top_adept" v-if="Topfleg">
 						擅长:
-						<view>短线</view>
+						<view>短线</view> 
 						<view>很多非常</view>
 						<view>短线</view>
 						<view>很多非常</view>
@@ -178,9 +178,8 @@ export default {
 		},
 		// 顶部立即购买点击事件
 		experience() {
-			alert('立即购买');
 			uni.navigateTo({
-				url: '@pages/index/experience'
+				url: './choiceness'
 			});
 		},
 		historyStreaming(){
