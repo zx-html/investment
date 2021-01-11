@@ -39,6 +39,46 @@
 				"backgroundTextStyle": "dark" //下拉 loading 的样式，仅支持 dark/light
 		
 			}
+		},
+		{
+			"path": "pages/index/investmentSilkBag",
+			"style": {
+				"navigationBarTitleText": "投顾锦囊",
+				"navigationBarBackgroundColor":"#FFFFFF",// 导航栏背景颜色
+				"enablePullDownRefresh": true, //设置为true表示当前页面开启下拉刷新
+				"backgroundTextStyle": "dark" //下拉 loading 的样式，仅支持 dark/light
+		
+			}
+		},
+		{
+			"path": "pages/index/investmentChoiceness",
+			"style": {
+				"navigationBarTitleText": "投顾精选",
+				"navigationBarBackgroundColor":"#FFFFFF",// 导航栏背景颜色
+				"enablePullDownRefresh": true, //设置为true表示当前页面开启下拉刷新
+				"backgroundTextStyle": "dark" //下拉 loading 的样式，仅支持 dark/light
+		
+			}
+		},
+		{
+			"path": "pages/index/update",
+			"style": {
+				"navigationBarTitleText": "数据更新",
+				"navigationBarBackgroundColor":"#FFFFFF",// 导航栏背景颜色
+				"enablePullDownRefresh": true, //设置为true表示当前页面开启下拉刷新
+				"backgroundTextStyle": "dark" //下拉 loading 的样式，仅支持 dark/light
+		
+			}
+		},
+		{
+			"path": "pages/index/updateParticulars",
+			"style": {
+				"navigationBarTitleText": "数据更新详情",
+				"navigationBarBackgroundColor":"#FFFFFF",// 导航栏背景颜色
+				"enablePullDownRefresh": true, //设置为true表示当前页面开启下拉刷新
+				"backgroundTextStyle": "dark" //下拉 loading 的样式，仅支持 dark/light
+		
+			}
 		}
 	],
 	

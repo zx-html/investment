@@ -56,7 +56,7 @@
 						<view class="">
 							使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
 						</view>
-						<view class="">#老师观点# 属性表现阴影效果是现代浏览器</view>
+						<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
 						<view class=""><image src="../../static/logo.png" mode=""></image></view>
 					</view>
 
@@ -69,7 +69,7 @@
 						<view class="">
 							使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
 						</view>
-						<view class="">#老师观点# 属性表现阴影效果是现代浏览器</view>
+						<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
 						<view class=""><image src="../../static/logo.png" mode=""></image></view>
 					</view>
 
@@ -82,7 +82,7 @@
 						<view class="">
 							使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
 						</view>
-						<view class="">#老师观点# 属性表现阴影效果是现代浏览器</view>
+						<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
 						<view class=""><image src="../../static/logo.png" mode=""></image></view>
 					</view>
 				</view>
@@ -95,7 +95,7 @@
 				</view>
 			</view>
 		</view>
-
+			<!-- 历史直播 -->
 		<view class="history_box" v-show="particulars">
 			<view class="content_time">
 				<view class="">2020-12-10 星期三</view>
@@ -115,7 +115,20 @@
 				<view class="">
 					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
 				</view>
-				<view class="">#老师观点# 属性表现阴影效果是现代浏览器</view>
+				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
+				<view class="" ><image src="../../static/logo.png" mode=""></image></view>
+			</view>
+			
+			<view class="content_viewpoint">
+				<view class="">
+					11:40
+					<view class="content_indicate"></view>
+				</view>
+				<view class="">【老师观点】</view>
+				<view class="">
+					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
+				</view>
+				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
 				<view class=""><image src="../../static/logo.png" mode=""></image></view>
 			</view>
 			
@@ -128,20 +141,7 @@
 				<view class="">
 					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
 				</view>
-				<view class="">#老师观点# 属性表现阴影效果是现代浏览器</view>
-				<view class=""><image src="../../static/logo.png" mode=""></image></view>
-			</view>
-			
-			<view class="content_viewpoint">
-				<view class="">
-					11:40
-					<view class="content_indicate"></view>
-				</view>
-				<view class="">【老师观点】</view>
-				<view class="">
-					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
-				</view>
-				<view class="">#老师观点# 属性表现阴影效果是现代浏览器</view>
+				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
 				<view class=""><image src="../../static/logo.png" mode=""></image></view>
 			</view>
 		</view>
@@ -324,6 +324,7 @@ export default {
 	padding: 15px 0;
 	border-bottom: 1px solid #f3f3f3;
 	margin-bottom: 20px;
+	line-height: 25px;
 }
 .content_title view:nth-child(1) {
 	width: 44px;
@@ -333,6 +334,7 @@ export default {
 	border-radius: 5px;
 	text-align: center;
 	margin-right: 5px;
+	line-height: 25px;
 }
 .content_title view:nth-child(2) {
 	font-weight: bold;
@@ -352,6 +354,7 @@ export default {
 .content_viewpoint view:nth-child(2) {
 	margin: 10px 0 10px 0px;
 	font-weight: bold;
+	font-size: 14px;
 }
 .content_viewpoint view:nth-child(3) {
 	margin: 10px 0 10px 5px;

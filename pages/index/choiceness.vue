@@ -27,6 +27,14 @@
 					<view>很多非常</view>
 				</view>
 			</view>
+			<!-- 底部点击按钮 -->
+			<view class="botton_box">
+				<view class="botton">
+					<view class="">3000 <text style="font-size: 12px;">元/月</text> </view>
+					<view class=""></view>
+					<view class="" @click="payment()">立即购买</view>	
+				</view>
+			</view>
 		</view>
 
 		<view class="content">
@@ -53,13 +61,6 @@
 			<!-- 图表 -->
 			<view >
 				<view class="canvasView"><mpvue-echarts class="ec-canvas" @onInit="lineInit" canvasId="line" ref="lineChart" /></view>
-			</view>
-			
-			<!-- 底部点击按钮 -->
-			<view class="botton">
-				<view class="">3000 <text style="font-size: 12px;">元/月</text> </view>
-				<view class=""></view>
-				<view class="">立即购买</view>	
 			</view>
 			
 		</view>
@@ -122,12 +123,8 @@ export default {
 			// 	this.Topfleg = true;
 			// }
 		},
-		// 顶部立即购买点击事件
-		experience() {
-			uni.navigateTo({
-				url: '@pages/index/experience'
-			});
-		},
+
+
 		// 图表事件
 		lineInit(e) {
 			let { width, height } = e;
@@ -141,11 +138,20 @@ export default {
 			lineChart.setOption(this.line);
 			this.$refs.lineChart.setChart(lineChart);
 		},
+		// 锦囊点击事件
 		silkBag(){
 			uni.navigateTo({
 				url: './silkBag'
 			});
-		}	
+		},
+		// 立即购买点击事件
+		payment(){
+			// alert("立即支付")
+			uni.navigateTo({
+				url: './investmentChoiceness'
+			});
+		}
+			
 	},
 	components: {
 		mpvueEcharts
@@ -259,21 +265,37 @@ export default {
 .canvasView {
 	width: 100%;
 	height: 300px;
-	margin-bottom: 60px;
+	margin-bottom: 100px;
 }
 
 // 底部按钮
-.botton{
+.botton_box{
 	width: 100%;
+	background-color: #fff;
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	z-index: 999;
+	background-color: #FFFFFF;
+	line-height: 50px;
+	box-shadow:  3px -6px 10px 1px #f5eeee;
+}
+
+.botton{
+	width: 90%;
 	height: 50px;
 	display: flex;
 	line-height: 50px;
-	background-color: #FF6A21;
 	background-image: linear-gradient(50deg, #FF6A21, #FF1113);
 	border-radius: 50px;
 	color: #FFFFFF;
-	margin-bottom: 15px;
+	margin: 15px;
 }
+
+
 .botton view{
 	width: 50%;
 	text-align: center;

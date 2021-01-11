@@ -143,6 +143,7 @@ export default {
 .title view:nth-child(2) {
 	line-height: 20px;
 	font-weight: bold;
+	font-size: 16px;
 }
 // 卡片
 .card {
