@@ -14,7 +14,7 @@
 					开发者可以通过熟悉的 ECharts 配置方式，快速开发图表，满足各种可视化需求。 开发者可以通过熟悉的 ECharts 配置方式，快速开发图表，满足各种可视化需求。
 				</view>
 			</view>
-			
+
 			<!-- 卡片 -->
 			<view class="introduce">
 				<view class="introduce_title">
@@ -31,10 +31,9 @@
 						<text>是否科创板</text>
 						<image src="../../static/Dingtalk_20210108092818.jpg" mode=""></image>
 					</view>
-					
 				</view>
 			</view>
-			
+
 			<!-- 卡片 -->
 			<view class="introduce">
 				<view class="introduce_title">
@@ -55,10 +54,9 @@
 						<text>保守型</text>
 						<image src="../../static/Dingtalk_20210108092818.jpg" mode=""></image>
 					</view>
-					
 				</view>
 			</view>
-			
+
 			<!-- 卡片 -->
 			<view class="introduce">
 				<view class="introduce_title">
@@ -71,17 +69,13 @@
 					开发者可以通过熟悉的 ECharts 配置方式，快速开发图表，满足各种可视化需求。 开发者可以通过熟悉的 ECharts 配置方式，快速开发图表，满足各种可视化需求。
 				</view>
 			</view>
-			
 		</view>
-		
+
 		<!-- 底部按钮 -->
 		<view class="botton_box">
-			<view class="botton" @click="payment()">
-				<view class="">立即购买</view>	
-			</view>
+			<view class="botton" @click="payment()"><view class="">立即购买</view></view>
 		</view>
 	</view>
-
 </template>
 
 <script>
@@ -91,11 +85,10 @@ export default {
 	},
 	onLoad() {},
 	methods: {
-		payment(){
+		payment() {
 			uni.navigateTo({
 				url: './investmentSilkBag'
 			});
-			
 		}
 	}
 };
@@ -125,7 +118,7 @@ export default {
 	box-shadow: 1px 2px 11px 4px #e9e9e9;
 	background-color: #ffffff;
 	border-radius: 10px;
-	padding:0px 15px 20px 15px;
+	padding: 0px 15px 20px 15px;
 	margin-bottom: 10px;
 	.introduce_title {
 		width: 100%;
@@ -144,15 +137,15 @@ export default {
 			color: #ff551e;
 		}
 	}
-	
-	.introduce_text{
+
+	.introduce_text {
 		display: flex;
 		justify-content: center;
 	}
-	.introduce_text view{		
+	.introduce_text view {
 		line-height: 30px;
 		margin-right: 20px;
-		image{
+		image {
 			width: 20px;
 			height: 20px;
 			margin-bottom: -5px;
@@ -161,7 +154,7 @@ export default {
 }
 
 // 底部按钮
-.botton_box{
+.botton_box {
 	width: 100%;
 	background-color: #fff;
 	position: fixed;
@@ -171,21 +164,20 @@ export default {
 	left: 0;
 	text-align: center;
 	z-index: 999;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	line-height: 50px;
-	box-shadow:  3px -6px 10px 1px #f5eeee;
+	box-shadow: 3px -6px 10px 1px #f5eeee;
 }
 
-.botton{
+.botton {
 	width: 90%;
 	height: 50px;
 	display: flex;
 	justify-content: center;
 	line-height: 50px;
-	background-image: linear-gradient(50deg, #FF6A21, #FF1113);
+	background-image: linear-gradient(50deg, #ff6a21, #ff1113);
 	border-radius: 50px;
-	color: #FFFFFF;
+	color: #ffffff;
 	margin: 15px;
 }
-
 </style>

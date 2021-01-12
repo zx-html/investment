@@ -18,9 +18,12 @@
 		<view class="card">
 			<view class="card_top">
 				<view class="card_head">
-					<view class="headPortrait"  @click="experience()">
+					<view class="headPortrait" @click="experience()">
 						<image class="card_img" src="../../static/touxian.png"></image>
-						<view class="liveStreaming " ><view class=""></view><view id="MyliveStreaming">直播中</view></view>
+						<view class="liveStreaming ">
+							<view class=""></view>
+							<view id="MyliveStreaming">直播中</view>
+						</view>
 					</view>
 					<view class="card_message">
 						<view class="">
@@ -44,7 +47,6 @@
 				<text>使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧,</text>
 			</view>
 		</view>
-	
 	</view>
 </template>
 
@@ -79,9 +81,7 @@ export default {
 			}
 		};
 	},
-	onLoad() {
-		
-	},
+	onLoad() {},
 	methods: {
 		change(e) {
 			this.current = e.detail.current;
@@ -101,7 +101,6 @@ export default {
 				url: './choiceness'
 			});
 		}
-		
 	}
 };
 </script>
@@ -125,7 +124,7 @@ export default {
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
-} 
+}
 
 // 标题
 .title {
@@ -180,9 +179,8 @@ export default {
 	}
 }
 
-.headPortrait{	
-
-	.liveStreaming{
+.headPortrait {
+	.liveStreaming {
 		font-size: 10px;
 		position: absolute;
 		top: 40px;
@@ -191,20 +189,17 @@ export default {
 		border-radius: 50px;
 		padding: 0 3px;
 		display: flex;
-		background-color: #FFFFFF;
+		background-color: #ffffff;
 		color: #ff1417;
-		
 	}
-	.liveStreaming view:nth-child(1){
+	.liveStreaming view:nth-child(1) {
 		margin: 6px 3px 0 0;
 		width: 5px;
 		height: 5px;
-		background-color: #ff1417 ;
+		background-color: #ff1417;
 		border-radius: 50%;
-		
 	}
-	.liveStreamingBox{
-		
+	.liveStreamingBox {
 	}
 }
 .card_botton {
@@ -243,7 +238,7 @@ export default {
 }
 .card_content view:nth-child(3) {
 	color: #ff1417;
-} 
+}
 .card_button {
 	margin-top: 10px;
 	// font-size: 12px;

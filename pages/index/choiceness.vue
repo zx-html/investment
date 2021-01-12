@@ -30,16 +30,19 @@
 			<!-- 底部点击按钮 -->
 			<view class="botton_box">
 				<view class="botton">
-					<view class="">3000 <text style="font-size: 12px;">元/月</text> </view>
+					<view class="">
+						3000
+						<text style="font-size: 12px;">元/月</text>
+					</view>
 					<view class=""></view>
-					<view class="" @click="payment()">立即购买</view>	
+					<view class="" @click="payment()">立即购买</view>
 				</view>
 			</view>
 		</view>
 
 		<view class="content">
 			<!-- 标题 -->
-			<view class="title">   
+			<view class="title">
 				<view></view>
 				<view>标的特点</view>
 			</view>
@@ -48,21 +51,20 @@
 			<view>使用Box-shadow属性表现阴影效果是现代器中</view>
 			<view>使用Box-shadow属性表现阴影现代览器中</view>
 			<view>使用Box-shadow属性表现阴影效现代浏览器中</view>
-			
+
 			<!-- 锦囊 -->
 			<view class="silkBag" @click="silkBag()"><image src="../../static/logo.png" mode=""></image></view>
-			
+
 			<!-- 标题 -->
 			<view class="title">
 				<view></view>
 				<view>标的收益</view>
 			</view>
-			
+
 			<!-- 图表 -->
-			<view >
+			<view>
 				<view class="canvasView"><mpvue-echarts class="ec-canvas" @onInit="lineInit" canvasId="line" ref="lineChart" /></view>
 			</view>
-			
 		</view>
 	</view>
 </template>
@@ -79,9 +81,6 @@ export default {
 				tooltip: {
 					trigger: 'axis'
 				},
-				legend: {
-				    data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-				},   
 				grid: {
 					left: '3%',
 					right: '4%',
@@ -110,7 +109,6 @@ export default {
 					}
 				]
 			}
-		
 		};
 	},
 	onLoad() {},
@@ -123,7 +121,6 @@ export default {
 			// 	this.Topfleg = true;
 			// }
 		},
-
 
 		// 图表事件
 		lineInit(e) {
@@ -139,24 +136,22 @@ export default {
 			this.$refs.lineChart.setChart(lineChart);
 		},
 		// 锦囊点击事件
-		silkBag(){
+		silkBag() {
 			uni.navigateTo({
 				url: './silkBag'
 			});
 		},
 		// 立即购买点击事件
-		payment(){
+		payment() {
 			// alert("立即支付")
 			uni.navigateTo({
 				url: './investmentChoiceness'
 			});
 		}
-			
 	},
 	components: {
 		mpvueEcharts
 	}
-
 };
 </script>
 
@@ -269,7 +264,7 @@ export default {
 }
 
 // 底部按钮
-.botton_box{
+.botton_box {
 	width: 100%;
 	background-color: #fff;
 	position: fixed;
@@ -279,31 +274,30 @@ export default {
 	left: 0;
 	text-align: center;
 	z-index: 999;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	line-height: 50px;
-	box-shadow:  3px -6px 10px 1px #f5eeee;
+	box-shadow: 3px -6px 10px 1px #f5eeee;
 }
 
-.botton{
+.botton {
 	width: 90%;
 	height: 50px;
 	display: flex;
 	line-height: 50px;
-	background-image: linear-gradient(50deg, #FF6A21, #FF1113);
+	background-image: linear-gradient(50deg, #ff6a21, #ff1113);
 	border-radius: 50px;
-	color: #FFFFFF;
+	color: #ffffff;
 	margin: 15px;
 }
 
-
-.botton view{
+.botton view {
 	width: 50%;
 	text-align: center;
 }
-.botton view:nth-child(2){
+.botton view:nth-child(2) {
 	width: 1px;
 	height: 20px;
 	margin: auto;
-	background-color: #FF6A59;
+	background-color: #ff6a59;
 }
 </style>

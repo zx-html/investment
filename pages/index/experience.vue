@@ -25,7 +25,7 @@
 					</view>
 					<view class="top_adept" v-if="Topfleg">
 						擅长:
-						<view>短线</view> 
+						<view>短线</view>
 						<view>很多非常</view>
 						<view>短线</view>
 						<view>很多非常</view>
@@ -95,11 +95,11 @@
 				</view>
 			</view>
 		</view>
-			<!-- 历史直播 -->
+		<!-- 历史直播 -->
 		<view class="history_box" v-show="particulars">
 			<view class="content_time">
 				<view class="">2020-12-10 星期三</view>
-				<view class="" @click="historyStreaming()" >X</view>
+				<view class="" @click="historyStreaming()">X</view>
 			</view>
 
 			<view class="content_title">
@@ -116,9 +116,9 @@
 					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
 				</view>
 				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
-				<view class="" ><image src="../../static/logo.png" mode=""></image></view>
+				<view class=""><image src="../../static/logo.png" mode=""></image></view>
 			</view>
-			
+
 			<view class="content_viewpoint">
 				<view class="">
 					11:40
@@ -131,7 +131,7 @@
 				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
 				<view class=""><image src="../../static/logo.png" mode=""></image></view>
 			</view>
-			
+
 			<view class="content_viewpoint">
 				<view class="">
 					11:40
@@ -155,7 +155,7 @@ export default {
 			Inv: 0,
 			scrollTop: '',
 			Topfleg: true,
-			particulars:false
+			particulars: false
 		};
 	},
 	onLoad() {
@@ -182,10 +182,9 @@ export default {
 				url: './choiceness'
 			});
 		},
-		historyStreaming(){
+		historyStreaming() {
 			this.particulars = !this.particulars;
 		}
-		
 	}
 };
 </script>
@@ -198,7 +197,7 @@ export default {
 .history_box {
 	padding: 10px;
 	margin-top: 10px;
-	border-top: 1px solid #EEEEEE;
+	border-top: 1px solid #eeeeee;
 }
 
 // 顶部老师介绍
@@ -295,12 +294,11 @@ export default {
 	border-bottom: 2px solid #ff1417;
 }
 // 直播
-.content_time  {
+.content_time {
 	display: flex;
 	justify-content: space-between;
-	
 }
-.content_time view:nth-child(1){
+.content_time view:nth-child(1) {
 	width: 88%;
 	height: 30px;
 	line-height: 30px;
@@ -309,7 +307,7 @@ export default {
 	border-radius: 5px;
 	color: #555555;
 }
-.content_time view:nth-child(2){
+.content_time view:nth-child(2) {
 	width: 10%;
 	height: 30px;
 	line-height: 30px;
