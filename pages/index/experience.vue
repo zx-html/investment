@@ -4,34 +4,36 @@
 		<view class="" v-show="!particulars">
 			<!-- 顶部老师介绍 -->
 			<view :class="[Topfleg == true ? 'top_text' : 'top_text_fixed']">
-				<view class="top_box">
+				<view class="top_box" v-if="streaming !=''">
 					<view class="card_top">
 						<view class="card_head">
-							<view class=""><image class="card_img" src="../../static/touxian.png" mode=""></image></view>
+							<view class=""><image class="card_img" :src="streaming[0].value.teacherImg" mode=""></image></view>
 							<view class="card_message">
 								<view class="">
-									童日春
-									<text style="margin-left: 6px;">(首席投顾)</text>
+									{{streaming[0].value.teacherName}}
+									<text style="margin-left: 6px;">({{streaming[0].value.level}})</text>
 								</view>
-								<view class="">执业号：132552455652325</view>
+								<view class="">执业号：{{streaming[0].value.sac}}</view>
 							</view>
 						</view>
 						<view class="card_botton" @click="experience()">马上体验</view>
 					</view>
 					<view class="top_synopsis" v-if="Topfleg">
-						简介:CSS阴影效果(Box-shadow)用法趣味讲解分享: 使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧,
-						通过它我们可以做出很多非常酷的东西。让我们来一 CSS阴影效果(Box-shadow)用法趣味讲解分享: 使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧,
-						通过它我们可以做出很多非常酷的东西。让我们来一.
+						<view class="">
+						简介：
+						</view>
+						<view class="" style="text-indent: 2em;">
+							{{streaming[0].value.intro}}
+						</view>
 					</view>
 					<view class="top_adept" v-if="Topfleg">
 						擅长:
-						<view>短线</view>
-						<view>很多非常</view>
-						<view>短线</view>
-						<view>很多非常</view>
+						<view v-for="item in manifesto" :key="item.id">{{item}}</view>
+						
 					</view>
 				</view>
 			</view>
+			
 			<!-- 直播介绍 -->
 			<view class="content">
 				<view class="option">
@@ -41,124 +43,139 @@
 					</view>
 				</view>
 				<!-- 图文直播 -->
-				<view class="" v-show="Inv == 0">
-					<view class="content_time">2020-12-25 星期五</view>
-					<view class="content_title">
-						<view class="">主题</view>
-						<view class="">使用Box-shadow属性表现阴影效果是现代浏</view>
+				<view v-if="streaming[0]" class="" v-show="Inv == 0">
+					<view class="" v-if="streaming[0].value.way == 1">
+						<view class="content_time">{{ streaming[0].value.publishTime | formatDate2 }}</view>
+						<view class="content_title">
+							<view class="">主题</view>
+							<view class="">{{ streaming[0].value.title}}</view>
+						</view>
+						<view class="content_viewpoint"  v-for="(item,index) in streaming[0].value.childDto" :key="index">
+							<view class="content_viewpoint1">
+								{{item.publishTime | formatDate3}}
+								<!-- 红点 -->
+								<view class="content_indicate"></view>
+							</view>
+							<view class="content_viewpoint2"> {{item.title}}</view>
+							<view class="content_viewpoint3" v-html="item.content">
+								{{item.content}}
+							</view>
+							<view class="content_viewpoint4" v-if="item.linkTitle !='' || item.linkPath != ''"  @click="experience()"><text >#{{item.linkTitle}}#</text> <text>{{item.linkPath}}</text></view>
+						</view>
 					</view>
-					<view class="content_viewpoint">
-						<view class="">
-							11:40
-							<view class="content_indicate"></view>
-						</view>
-						<view class="">【老师观点】</view>
-						<view class="">
-							使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
-						</view>
-						<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
-						<view class=""><image src="../../static/logo.png" mode=""></image></view>
-					</view>
-
-					<view class="content_viewpoint">
-						<view class="">
-							11:40
-							<view class="content_indicate"></view>
-						</view>
-						<view class="">【老师观点】</view>
-						<view class="">
-							使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
-						</view>
-						<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
-						<view class=""><image src="../../static/logo.png" mode=""></image></view>
-					</view>
-
-					<view class="content_viewpoint">
-						<view class="">
-							11:40
-							<view class="content_indicate"></view>
-						</view>
-						<view class="">【老师观点】</view>
-						<view class="">
-							使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
-						</view>
-						<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
-						<view class=""><image src="../../static/logo.png" mode=""></image></view>
+					
+					<view style="text-align: center;"  v-if="streaming[0].value.way == 0">
+						当前没有直播，请查看历史直播
 					</view>
 				</view>
 				<!-- 历史直播 -->
-				<view class="" v-show="Inv == 1">
-					<view class="history" @click="historyStreaming()">
-						<view class="">历史直播历史直播历史直播历史直播历史直播历史直播历史直播</view>
-						<view class="">11月15日 09:11</view>
+				<view class="" v-show="Inv == 1" v-if="streaming[0]">
+					<view class="" v-if="streaming[0].value.way == 0"  v-for="(item,index) in streaming" :key="index">
+						<view class="history" @click="historyStreaming(item)">
+							<view class="">{{ item.value.title }}</view>
+							<!-- <view class="">{{item.value.publishTime | formatDate2}}</view> -->
+						</view>
+					</view>
+					<view style="text-align: center;" v-if="streaming[0].value.way == 1">
+						当前正在直播，请查看图文直播
 					</view>
 				</view>
 			</view>
+			
 		</view>
 		<!-- 历史直播 -->
-		<view class="history_box" v-show="particulars">
-			<view class="content_time">
-				<view class="">2020-12-10 星期三</view>
-				<view class="" @click="historyStreaming()">X</view>
+		<view class="history_box" v-show="particulars" >
+			<view class="" v-if="historychildDto!=''">
+				<view class="content_time">
+					<view class="">{{historychildDto.value.publishTime | formatDate2}}</view>
+					<view class="" @click="historyDlt()">X</view>
+				</view>
+				
+				<view class="content_title">
+					<view class="">主题</view>
+					<view class="">{{historychildDto.value.title}}</view>
+				</view>
+				<view class="content_viewpoint" v-for="(item,index) in historychildDto.value.childDto" :key="index">
+					<view class="content_viewpoint1">
+						{{item.publishTime | formatDate3}}
+						<view class="content_indicate"></view>
+					</view>
+					<view class="content_viewpoint2"> {{item.title}}</view>
+					<view class="content_viewpoint3" v-html="item.content">
+						{{item.content}}
+					</view>
+					<view class="content_viewpoint4" v-if="item.linkTitle !='' || item.linkPath != ''" @click="experience()"><text >#{{item.linkTitle}}#</text> <text>{{item.linkPath}}</text></view>			
+						
+				</view>
 			</view>
 
-			<view class="content_title">
-				<view class="">主题</view>
-				<view class="">使用Box-shadow属性表现阴影效果是现代浏</view>
-			</view>
-			<view class="content_viewpoint">
-				<view class="">
-					11:40
-					<view class="content_indicate"></view>
-				</view>
-				<view class="">【老师观点】</view>
-				<view class="">
-					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
-				</view>
-				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
-				<view class=""><image src="../../static/logo.png" mode=""></image></view>
-			</view>
-
-			<view class="content_viewpoint">
-				<view class="">
-					11:40
-					<view class="content_indicate"></view>
-				</view>
-				<view class="">【老师观点】</view>
-				<view class="">
-					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
-				</view>
-				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
-				<view class=""><image src="../../static/logo.png" mode=""></image></view>
-			</view>
-
-			<view class="content_viewpoint">
-				<view class="">
-					11:40
-					<view class="content_indicate"></view>
-				</view>
-				<view class="">【老师观点】</view>
-				<view class="">
-					使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一CSS阴影效果(Box-shadow)用法趣味讲解分享:
-				</view>
-				<view class="" @click="experience()">#老师观点# 属性表现阴影效果是现代浏览器</view>
-				<view class=""><image src="../../static/logo.png" mode=""></image></view>
-			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import http from '@/components/utils/http.js';
+import { formatDate } from '@/components/tiem/tiem.js';
 export default {
 	data() {
 		return {
 			Inv: 0,
 			scrollTop: '',
 			Topfleg: true,
-			particulars: false
+			particulars: false,
+			streaming:"",
+			manifesto:'',
+			historychildDto:"",
+			experiencenav:""
 		};
 	},
-	onLoad() {
+	//  时间戳转换
+	filters: {
+		formatDate(time) {
+			time = time * 1000;
+			let date = new Date(time);
+			// return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+			return formatDate(date, 'MM-dd hh:mm');
+		},
+		formatDate2(time) {
+			time = time * 1000;
+			let date = new Date(time);
+			// return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+			return formatDate(date, 'yyyy-MM-dd hh:mm');
+		},
+		formatDate3(time) {
+			time = time * 1000;
+			let date = new Date(time);
+			// return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+			return formatDate(date, 'MM-dd');
+		}
+	},
+	onLoad(option) {
+			this.experiencenav = option.navid;
+		// 获取详情数据ajax  option为跳转事件携带的参数
+		let streaminglistUrl = {
+			url: '/user/columnPage/' + option.navid + '/upRefresh',
+			method: 'post'
+		};
+		http.httpTokenRequest(streaminglistUrl).then(
+			res => {
+					this.streaming = res.data.msg
+					var streamingstr = this.streaming[0].value.manifesto;
+					this.manifesto = streamingstr.split('/');
+					console.log(this.streaming)
+					console.log(res.data.msg[0])
+					// way 等于 0 没有直播，显示历史直播
+					if(this.streaming[0].value.way != 1){
+						this.Inv = 1;
+					}else{
+					// way 等于 1 有直播，显示图文直播
+						
+					}
+			},
+			error => {
+					console.log(error);
+				}
+		);
 		uni.setNavigationBarTitle({
 			title: '新的标题'
 		});
@@ -179,10 +196,15 @@ export default {
 		// 顶部立即购买点击事件
 		experience() {
 			uni.navigateTo({
-				url: './choiceness'
+				url: './choiceness?navid='+this.experiencenav
 			});
 		},
-		historyStreaming() {
+		historyStreaming(childDto) {
+			this.particulars = !this.particulars;
+			this.historychildDto = childDto;
+			console.log(this.historychildDto)
+		},
+		historyDlt(){
 			this.particulars = !this.particulars;
 		}
 	}
@@ -213,6 +235,7 @@ export default {
 		width: 40px;
 		height: 40px;
 		margin-right: 5px;
+		border-radius: 50%;
 	}
 	.card_message {
 		// line-height: 20px;
@@ -255,10 +278,11 @@ export default {
 	border-radius: 10px;
 }
 .top_synopsis {
-	font-size: 12px;
+	font-size: 14px;
 	padding: 0 10px 10px 10px;
 }
 .top_adept {
+	font-size: 14px;
 	display: flex;
 	justify-content: space-around;
 	padding-bottom: 10px;
@@ -297,6 +321,11 @@ export default {
 .content_time {
 	display: flex;
 	justify-content: space-between;
+	padding: 8px;
+	background-color: #f4f4f4;
+	border-radius: 10px;
+	color: #333;
+	font-size: 14px;
 }
 .content_time view:nth-child(1) {
 	width: 88%;
@@ -344,39 +373,32 @@ export default {
 	border-left: 1px solid #ccc;
 	padding: 0 0 15px 5px;
 }
-.content_viewpoint view:nth-child(1) {
+.content_viewpoint1  {
 	margin: 0px 0 10px 5px;
 	position: relative;
 	line-height: 13px;
 }
-.content_viewpoint view:nth-child(2) {
+.content_viewpoint2  {
 	margin: 10px 0 10px 0px;
 	font-weight: bold;
 	font-size: 14px;
 }
-.content_viewpoint view:nth-child(3) {
+.content_viewpoint3 {
 	margin: 10px 0 10px 5px;
 	color: #555555;
 }
-.content_viewpoint view:nth-child(4) {
+.content_viewpoint4  {
 	margin: 10px 0 10px 5px;
 	color: #4b67f7;
 }
-.content_viewpoint view:nth-child(5) {
-	margin: 10px 0 10px 5px;
-	height: 150px;
-	image {
-		width: 100%;
-		height: 100%;
-	}
-}
+
 .content_indicate {
 	width: 7px;
 	height: 7px;
 	background-color: #ff1417;
 	border-radius: 50%;
 	position: absolute !important;
-	left: -19px;
+	left: -14px;
 	top: 0px;
 }
 

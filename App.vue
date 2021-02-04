@@ -1,13 +1,13 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			// console.log('App Launch')
 		},
 		onShow: function() {
-			console.log('App Show')
+			// console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			// console.log('App Hide')
 		}
 	}
 </script>
@@ -18,9 +18,20 @@
 		width: 100%;
 		height: 100%;
 		/* background-color: #C8C7CC; */
-		font-size: 12px;
+		font-size: 14px;
 	}
 	.content{
 	
 	}
+	.uni-swiper-dot-active{
+		width: 15px !important;
+		border-radius: 5px !important;
+	}
+	
+	.uni-scroll-view-content{
+		   display: flex;
+		/* overflow-x: auto; */
+		// overflow: auto hidden;
+	}
+	
 </style>

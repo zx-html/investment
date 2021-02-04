@@ -1,39 +1,77 @@
   //请求地址 
-const baseUrl = 'http://pro.djc888.com/djc-serve';
+// const baseUrl = 'http://pro.djc888.com/djc-serve';
 // const baseUrl = 'http://chenxiong.host/djc-serve';
-// const baseUrl = 'http://192.168.10.63:8080/djc-serve';
+const baseUrl = 'http://192.168.10.63:8080/djc-serve';
 const httpRequest = (opts, data) => {
-    let httpDefaultOpts = {
-        url: baseUrl+opts.url,
-        data: data,
-        beforeSend :function(xmlHttp){
-            xmlHttp.setRequestHeader("If-Modified-Since","0"); 
-            xmlHttp.setRequestHeader("Cache-Control","no-cache");
-        },
-        method: opts.method,
-        header: opts.method == 'GET' ? {
-        'X-Requested-With': 'XMLHttpRequest',
-        "Accept": "application/json",
-        "Content-Type": "application/json; charset=UTF-8"
-    } : {
-       'content-type': 'application/x-www-form-urlencoded'
-    },
-        dataType: 'json',
-    }
-    let promise = new Promise(function(resolve, reject) {
-        uni.request(httpDefaultOpts).then(
-            (res) => {
-                resolve(res[1])
-            }
-        ).catch(
-            (response) => {
-                reject(response)
-            }
-        )
-    })
-    return promise
+	let httpDefaultOpts = {
+		url: baseUrl + opts.url,
+		data: data,
+		method: opts.method,
+		header: opts.method == 'get' ? {
+			'X-Requested-With': 'XMLHttpRequest',
+			"Accept": "application/json",
+			"Content-Type": "application/json; charset=UTF-8"
+		} : {
+			'X-Requested-With': 'XMLHttpRequest',
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+		},
+		dataType: 'json',
+	}
+	let promise = new Promise(function(resolve, reject) {
+		uni.request(httpDefaultOpts).then(
+			(res) => {
+				resolve(res[1])
+			}
+		).catch(
+			(response) => {
+				reject(response)
+			}
+		)
+	})
+	return promise
 };
+//带Token请求
+const httpTokenRequest = (opts, data) => {
+	let token = "";
+	uni.getStorage({
+		key: 'token',
+		success: function(ress) {
+			token = ress.data
+		}
+	});
+	//此token是登录成功后后台返回保存在storage中的
+	let httpDefaultOpts = {
+		url: baseUrl + opts.url,
+		data: data,
+		method: opts.method,
+		header: opts.method == 'get' ? {
+			'Token': token,
+			'X-Requested-With': 'XMLHttpRequest',
+			"Accept": "application/json",
+			"Content-Type": "application/json; charset=UTF-8"
+		} : {
+			'Token': token,
+			'X-Requested-With': 'XMLHttpRequest',
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+		},
+		dataType: 'json',
+	}
+	let promise = new Promise(function(resolve, reject) {
+		uni.request(httpDefaultOpts).then(
+			(res) => {
+				resolve(res[1])
+			}
+		).catch(
+			(response) => {
+				reject(response)
+			}
+		)
+	})
+	return promise
+};
+
 export default {
-    baseUrl,
-    httpRequest
+	baseUrl,
+	httpRequest,
+	httpTokenRequest
 }

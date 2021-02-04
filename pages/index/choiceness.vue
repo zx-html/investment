@@ -1,46 +1,41 @@
 <template>
 	<view class="">
 		<!-- 顶部老师介绍 -->
-		<view :class="[Topfleg == true ? 'top_text' : 'top_text_fixed']">
-			<view class="top_box">
+		<view class="top_text">
+			<view class="top_box" v-if="streaming != ''">
 				<view class="card_top">
 					<view class="card_head">
-						<view class=""><image class="card_img" src="../../static/touxian.png" mode=""></image></view>
+						<view class=""><image class="card_img" :src="streaming[0].value.teacherImg" mode=""></image></view>
 						<view class="card_message">
 							<view class="">
-								童日春
-								<text style="margin-left: 6px;">(首席投顾)</text>
+								{{ streaming[0].value.teacherName }}
+								<text style="margin-left: 6px;">({{ streaming[0].value.level }})</text>
 							</view>
-							<view class="">执业号：132552455652325</view>
+							<view class="">执业号：{{ streaming[0].value.sac }}</view>
 						</view>
 					</view>
+					<!-- <view class="card_botton" @click="experience()">马上体验</view> -->
 				</view>
 				<view class="top_synopsis" v-if="Topfleg">
-					简介:CSS阴影效果(Box-shadow)用法趣味讲解分享: 使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一
-					CSS阴影效果(Box-shadow)用法趣味讲解分享: 使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧, 通过它我们可以做出很多非常酷的东西。让我们来一.
+					<view class="">简介：</view>
+					<view class="" style="text-indent: 2em;">{{ streaming[0].value.intro }}</view>
 				</view>
 				<view class="top_adept" v-if="Topfleg">
 					擅长:
-					<view>短线</view>
-					<view>很多非常</view>
-					<view>短线</view>
-					<view>很多非常</view>
-				</view>
-			</view>
-			<!-- 底部点击按钮 -->
-			<view class="botton_box">
-				<view class="botton">
-					<view class="">
-						3000
-						<text style="font-size: 12px;">元/月</text>
-					</view>
-					<view class=""></view>
-					<view class="" @click="payment()">立即购买</view>
+					<view v-for="item in manifesto" :key="item.id">{{ item }}</view>
 				</view>
 			</view>
 		</view>
 
 		<view class="content">
+			<scroll-view scroll-x class="bg-white nav" scroll-with-animation :scroll-left="scrollLeft">
+				<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 10" :key="index" @tap="tabSelect" :data-id="index">
+					
+					<view class="" @click="navClick(index)">
+						Tab{{index}}
+					</view>
+				</view>
+			</scroll-view>
 			<!-- 标题 -->
 			<view class="title">
 				<view></view>
@@ -51,12 +46,11 @@
 			<view>使用Box-shadow属性表现阴影效果是现代器中</view>
 			<view>使用Box-shadow属性表现阴影现代览器中</view>
 			<view>使用Box-shadow属性表现阴影效现代浏览器中</view>
-
 			<!-- 锦囊 -->
 			<view class="silkBag" @click="silkBag()"><image src="../../static/logo.png" mode=""></image></view>
 
 			<!-- 标题 -->
-			<view class="title">
+			<view class="title"> 
 				<view></view>
 				<view>标的收益</view>
 			</view>
@@ -65,6 +59,17 @@
 			<view>
 				<view class="canvasView"><mpvue-echarts class="ec-canvas" @onInit="lineInit" canvasId="line" ref="lineChart" /></view>
 			</view>
+			<!-- 底部按钮 -->
+			<view class="botton_box">
+				<view class="botton" @click="payment()">
+					<view style="font-size: 16px;">
+						3000
+						<text style="font-size: 10px;">元/月</text>
+					</view>
+					<view class=""></view>
+					<view style="font-size: 16px;">立即购买</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -72,6 +77,7 @@
 <script>
 import * as echarts from '@/components/echarts/echarts.min.js';
 import mpvueEcharts from '@/components/mpvue-echarts/src/echarts.vue';
+import http from '@/components/utils/http.js';
 export default {
 	data() {
 		return {
@@ -87,15 +93,12 @@ export default {
 					bottom: '3%',
 					containLabel: true
 				},
-				// toolbox: {
-				// 	feature: {
-				// 		saveAsImage: {}
-				// 	}
-				// },
+
 				xAxis: {
 					type: 'category',
 					boundaryGap: false,
-					data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '周五', '周六', '周日']
+					show: false,
+					data: ['1', '2', '1', '2', '1', '2', '1', '2', '1', '2', '1', '2', '1', '2', '1', '2']
 				},
 				yAxis: {
 					type: 'value'
@@ -104,24 +107,54 @@ export default {
 					{
 						name: '邮件营销',
 						type: 'line',
-						stack: '总量',
-						data: [120, 132, 101, 134, 90, 230, 210, 90, 230, 210]
+						lineStyle: {
+							color: 'red', //折线颜色
+							width: 2 //折线宽度
+						},
+						data: [0.0, 0.01, -0.23, 0.5, 1.3, 0.8, 2.2, 4.6, 1.8, 5.1, 6.0, 3.4, 10.5, 11, 11.5, 14.1, 15, 11, 10, 9, 8.5, 6.4]
 					}
 				]
-			}
+			},
+			streaming: '',
+			manifesto: '',
+			TabCur: 0,    
+			scrollLeft: 0  
 		};
 	},
-	onLoad() {},
+	onLoad(option) {
+		this.experiencenav = option.navid;
+		// 获取详情数据ajax  option为跳转事件携带的参数
+		let streaminglistUrl = {
+			url: '/user/columnPage/' + option.navid + '/upRefresh',
+			method: 'post'
+		};
+		http.httpTokenRequest(streaminglistUrl).then(
+			res => {
+				this.streaming = res.data.msg;
+				var streamingstr = this.streaming[0].value.manifesto;
+				this.manifesto = streamingstr.split('/');
+				console.log(this.streaming);
+				console.log(res.data.msg[0]);
+			},
+			error => {
+				console.log(error);
+			}
+		);
+		// 获取标的
+		let objectUrl = {
+			url: '/common/teacher_products',
+			method: 'post'
+		};
+		http.httpTokenRequest(objectUrl).then(
+			res => {
+				console.log(res.data.msg);
+			},
+			error => {
+				console.log(error);
+			}
+		);
+	},
 	methods: {
-		onPageScroll(e) {
-			// this.scrollTop = e.scrollTop;
-			// if (e.scrollTop > 50) {
-			// 	this.Topfleg = false;
-			// } else {
-			// 	this.Topfleg = true;
-			// }
-		},
-
 		// 图表事件
 		lineInit(e) {
 			let { width, height } = e;
@@ -147,6 +180,14 @@ export default {
 			uni.navigateTo({
 				url: './investmentChoiceness'
 			});
+		},
+		tabSelect(e) {
+			this.TabCur = e.currentTarget.dataset.id;
+			this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
+		},
+		// 导航点击事件
+		navClick(index){
+			console.log(index)
 		}
 	},
 	components: {
@@ -156,6 +197,7 @@ export default {
 </script>
 
 <style lang="less">
+
 .content {
 	padding: 10px;
 }
@@ -173,6 +215,7 @@ export default {
 		width: 40px;
 		height: 40px;
 		margin-right: 5px;
+		border-radius: 50%;
 	}
 	.card_message {
 		// line-height: 20px;
@@ -180,7 +223,7 @@ export default {
 	}
 
 	.card_message view:nth-child(1) {
-		font-size: 12px;
+		font-size: 14px;
 	}
 	.card_message view:nth-child(2) {
 		font-size: 10px;
@@ -215,7 +258,7 @@ export default {
 	border-radius: 10px;
 }
 .top_synopsis {
-	font-size: 12px;
+	font-size: 14px;
 	padding: 0 10px 10px 10px;
 }
 .top_adept {
@@ -240,7 +283,7 @@ export default {
 	font-weight: bold;
 	margin-right: 5px;
 	background-color: #ff1417;
-	border-radius: 30%;
+	border-radius: 5px;
 }
 .title view:nth-child(2) {
 	line-height: 20px;
@@ -269,7 +312,7 @@ export default {
 	background-color: #fff;
 	position: fixed;
 	display: flex;
-	justify-content: center;
+	// justify-content: center;
 	bottom: 0;
 	left: 0;
 	text-align: center;
@@ -283,21 +326,64 @@ export default {
 	width: 90%;
 	height: 50px;
 	display: flex;
+	justify-content: space-between;
 	line-height: 50px;
 	background-image: linear-gradient(50deg, #ff6a21, #ff1113);
 	border-radius: 50px;
 	color: #ffffff;
 	margin: 15px;
 }
-
 .botton view {
 	width: 50%;
-	text-align: center;
 }
+
 .botton view:nth-child(2) {
 	width: 1px;
 	height: 20px;
 	margin: auto;
 	background-color: #ff6a59;
 }
+.button_title{
+	display: flex;
+	font-size: 14px;
+	// width: 50px;
+	height: 50px;
+}
+/* ==================
+         导航栏
+ ==================== */
+
+.nav {
+	white-space: nowrap;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+
+.nav .cu-item {
+	height: 90upx;
+	// display: inline-block;
+	line-height: 90upx;
+	margin: 0 10upx;
+	padding: 0 20upx;
+}
+
+.nav .cu-item.cur {
+	border-bottom: 4upx solid #de4a00;
+}
+.text-center {
+	text-align: center;
+}
+.bg-white {
+	background-color: #ffffff;
+	color: #666666;
+}
+.flex {
+	display: flex;
+}
+
+.flex-sub {
+	flex: 1;
+}
+
 </style>

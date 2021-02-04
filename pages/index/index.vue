@@ -1,13 +1,24 @@
 <template style="height: 100%;">
 	<view class="content">
 		<!-- 轮播图 -->
-		<uni-swiper-dot :info="info" :current="current" :mode="mode" :dots-styles="dotsStyles">
-			<swiper class="swiper-box" @change="change">
-				<swiper-item v-for="(item, index) in info" :key="index">
-					<view :class="item.colorClass" class="swiper-item"><image class="swiperimage" :src="item.url" mode="aspectFill" /></view>
-				</swiper-item>
-			</swiper>
-		</uni-swiper-dot>
+		<swiper
+			class="card-swiper"
+			:indicator-dots="true"
+			:circular="true"
+			autoplay="true"
+			interval="2000"
+			duration="500"
+			@change="cardSwiper"
+			indicator-color="#8799a3"
+			indicator-active-color="#fff"
+		>
+			<swiper-item v-for="(item, index) in swiperList" :key="index" :class="cardCur == index ? 'cur' : ''">
+				<view class="swiper-item">
+					<image :src="item.url" mode="aspectFill" v-if="item.type == 'image'"></image>
+					<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type == 'video'"></video>
+				</view>
+			</swiper-item>
+		</swiper>
 		<!-- 标题 -->
 		<view class="title">
 			<view></view>
@@ -15,36 +26,42 @@
 		</view>
 
 		<!-- 卡片 -->
-		<view class="card">
+		<view class="card" v-for="(item, index) in contentData" :key="index">
 			<view class="card_top">
 				<view class="card_head">
-					<view class="headPortrait" @click="experience()">
-						<image class="card_img" src="../../static/touxian.png"></image>
-						<view class="liveStreaming ">
+					<view class="headPortrait" @click="experience(index)">
+						<image class="card_img" :src="item.value.teacherImg"></image>
+						<view class="liveStreaming " v-if="item.value.way == 1">
 							<view class=""></view>
 							<view id="MyliveStreaming">直播中</view>
+						</view>
+						<view class="liveStreaming2" v-if="item.value.way == 0">
+							<view class=""></view>
+							<view id="MyliveStreaming">历史直播</view>
 						</view>
 					</view>
 					<view class="card_message">
 						<view class="">
-							童日春
-							<text style="margin-left: 6px;">(首席投顾)</text>
+							{{item.value.teacherName}}
+							<text style="margin-left: 6px;">({{item.value.level}})</text>
 						</view>
-						<view class="">执业号：132552455652325</view>
+						<view class="">执业号：{{item.value.sac}}</view>
 					</view>
 				</view>
-				<view class="card_botton" @click="choiceness()">马上体验</view>
+				<view class="card_botton" @click="choiceness(index)">马上体验</view>
 			</view>
 
 			<view class="card_content">
 				<view class="">成功率</view>
 				<view class=""></view>
-				<view class="">97.6%</view>
+				<view class="">{{item.value.successRate}}%</view> 
 			</view>
 
 			<view class="card_button">
-				<text># 产品标题 #</text>
-				<text>使用Box-shadow属性表现阴影效果是现代浏览器中是一个非常有用的技巧,</text>
+				 <navigator class="link_click" :url="item.value.linkPath" hover-class="navigator-hover">
+				     # {{item.value.linkTitle}} #
+				 </navigator>
+				<view>{{item.value.title}}</view>
 			</view>
 		</view>
 	</view>
@@ -52,54 +69,95 @@
 
 <script>
 import uniSwiperDot from '../../components/uni-swiper-dot/uni-swiper-dot.vue';
+import http from '@/components/utils/http.js';
 export default {
 	data() {
 		return {
-			info: [
+			dotStyle: true,
+			swiperList: [
 				{
-					url: 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg'
+					id: 0,
+					type: 'image',
+					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
 				},
 				{
-					url: 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg'
+					id: 1,
+					type: 'image',
+					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg'
 				},
 				{
-					url: 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg'
+					id: 2,
+					type: 'image',
+					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+				},
+				{
+					id: 3,
+					type: 'image',
+					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
 				}
 			],
-
-			modeIndex: -1,
-			styleIndex: -1,
-			current: 0,
-			mode: 'round',
-			dotsStyles: {
-				width: 8,
-				height: 5,
-				bottom: 10,
-				backgroundColor: 'rgba(255, 255, 255, 0.3)',
-				selectedBackgroundColor: '#fff', // 选中样式
-				selectedBorder: '1px rgb(255, 255, 255) solid'
-			}
+			cardCur: 0,
+			oneData: "",
+			contentData:[],
+			navids:[]
 		};
 	},
-	onLoad() {},
+	onLoad() {
+		let opts = {
+			url: '/user/columnPage/126/upRefresh',
+			method: 'post'
+		};
+		http.httpTokenRequest(opts).then(
+			res => {
+				//打印请求返回的数据
+				this.oneData = res.data.msg;
+				var streamingNaviId  = '';
+				for (var i in this.oneData) {
+					// 保存naviId 请求详细数据
+					streamingNaviId = this.oneData[i].naviId
+					this.navids.push(this.oneData[i].naviId)
+					// 获取详情数据ajax
+					let streamingUrl = {
+						url: '/user/columnPage/' + streamingNaviId + '/upRefresh',
+						method: 'post'
+					};
+					http.httpTokenRequest(streamingUrl).then(
+						res => {
+							if(res.data.msg !=''){
+								this.contentData.push(res.data.msg[0]) 
+							}
+						},
+						error => {
+							console.log(error);
+						}
+					);
+				}
+			},
+			error => {
+				console.log(error);
+			}
+		);
+	},
 	methods: {
 		change(e) {
 			this.current = e.detail.current;
 		},
-		// 马上体验点击事件
-		experience() {
+		// 直播详情
+		experience(navidindex) {
+			console.log(this.navids)
 			uni.navigateTo({
-				url: './experience'
+				url: './experience?navid='+this.navids[navidindex]
 			});
-			// var MyliveStreaming = document.getElementById("MyliveStreaming")
-			// 	MyliveStreaming.innerHTML="aaaa"
-			// 	console.log(MyliveStreaming)
+
 		},
-		// 跳转投顾精选
-		choiceness() {
+		// 马上体验
+		choiceness(navidindex) {
 			uni.navigateTo({
-				url: './choiceness'
+				url: './choiceness?navid='+this.navids[navidindex]
 			});
+		},
+		cardSwiper(e) {
+			this.cardCur = e.detail.current;
 		}
 	}
 };
@@ -164,9 +222,10 @@ export default {
 		width: 50px;
 		height: 50px;
 		margin-right: 5px;
+		border-radius: 50%;
 	}
 	.card_message {
-		// line-height: 20px;
+		line-height: 20px;
 		padding-top: 5px;
 	}
 
@@ -199,8 +258,22 @@ export default {
 		background-color: #ff1417;
 		border-radius: 50%;
 	}
-	.liveStreamingBox {
+	
+	.liveStreaming2 {
+		font-size: 10px;
+		position: absolute;
+		top: 40px;
+		left: -3px;
+		border: 1px #D2D2D6 solid;
+		border-radius: 50px;
+		padding: 0 3px;
+		display: flex;
+		background-color: #ffffff;
+		color: #D2D2D6;
+		padding:0 5px;
 	}
+	
+
 }
 .card_botton {
 	width: 100px;
@@ -238,6 +311,8 @@ export default {
 }
 .card_content view:nth-child(3) {
 	color: #ff1417;
+	font-weight: bold;
+	font-size: 14px;
 }
 .card_button {
 	margin-top: 10px;
@@ -245,10 +320,19 @@ export default {
 	overflow: hidden; //超出的文本隐藏
 	text-overflow: ellipsis; //溢出用省略号显示
 	white-space: nowrap; //溢出不换行
+	display: flex;
 }
-.card_button text:nth-child(1) {
+.card_button .link_click{
+	font-weight: bold;
 	color: #4b67f7;
 	margin-right: 5px;
+}
+.card-swiper {
+	image {
+		width: 100%;
+		height: 100%;
+		border-radius: 10px;
+	}
 }
 
 .cs {
